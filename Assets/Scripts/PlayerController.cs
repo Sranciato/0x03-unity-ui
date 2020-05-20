@@ -2,24 +2,43 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
 
+	public Text scoreText;
+	public Text healthText;
 	public Rigidbody rb;
+	public GameObject winLose;
+	public GameObject winLoseText;
+	private Text WLtext;
 	public float speed = 30;
 	private int score = 0;
 	public int health = 5;
 	// Use this for initialization
 	void Start () {
-		
+		WLtext = winLoseText.GetComponent<Text>();
 	}
 	void Update ()
 	{
 		if (health == 0)
 		{
-			Debug.Log("Game Over!");
+			winLose.SetActive(true);
+			WLtext.text = "Game Over!";
+			WLtext.color = Color.white;
+			winLose.GetComponent<Image>().color = Color.red;
+			StartCoroutine(LoadScene(3f));
+		}
+		if (Input.GetKey(KeyCode.Escape))
+		{
 			SceneManager.LoadScene(0);
 		}
+	}
+
+	IEnumerator LoadScene(float seconds)
+	{
+		yield return new WaitForSeconds(seconds);
+		SceneManager.LoadScene(0);
 	}
 	
 	// Update is called once per frame
@@ -47,17 +66,31 @@ public class PlayerController : MonoBehaviour {
 		if (other.tag == "Pickup")
 		{
 			score += 1;
-			Debug.Log("Score: " + score);
 			Destroy(other.gameObject);
+			SetScoreText();
 		}
 		if (other.tag == "Trap")
 		{
 			health -= 1;
-			Debug.Log("Health: " + health);
+			SetHealthText();
 		}
 		if (other.tag == "Goal")
 		{
-			Debug.Log("You win!");
+			winLose.SetActive(true);
+			winLose.GetComponent<Image>().color = Color.green;
+			WLtext.color = Color.black;
+			WLtext.text = "You Win!";
+			StartCoroutine(LoadScene(3f));
 		}
+	}
+
+	void SetHealthText()
+	{
+		healthText.text = "Health: " + health.ToString();
+	}
+
+	void SetScoreText()
+	{
+		scoreText.text = "Score: " + score.ToString();
 	}
 }
