@@ -21,7 +21,7 @@ public class MainMenu : MonoBehaviour {
 			trapMat.color = Color.red;
 			goalMat.color = Color.green;
 		}
-		SceneManager.LoadScene(1);
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 	}
 
 	public void QuitMaze()
