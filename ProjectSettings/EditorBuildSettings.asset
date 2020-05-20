@@ -7,7 +7,7 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/menu.unity
-    guid: b6e966ec0af2b2d4d894aea9ed0488d7
+    guid: c818b02651f6c214ebaf28449833cfce
   - enabled: 1
     path: Assets/maze.unity
     guid: 90e0410ef64dca34bab9040a45a08f7b
